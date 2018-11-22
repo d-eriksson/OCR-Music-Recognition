@@ -1,4 +1,13 @@
-close all
-img = imread('im5s.jpg');
-img = im2double(img);
-[strout, BW]  = tnm034(img);
+% Load image ( and invert it, only to make the extra rotation work for
+% testing purposes)
+grayimg = rgb2gray(im2double(imread('im5s.jpg'))).*(-1)+1;
+
+% Extra rotation for testing purposes
+%grayimg = imrotate(grayimg, 10, 'bicubic', 'crop');
+
+% The function autorotate identifies the rotation and corrects for it
+rotimg = autorotate(grayimg);
+
+% The next step is to identify musical notes and characters
+
+imshow(rotimg)

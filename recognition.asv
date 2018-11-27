@@ -47,7 +47,7 @@ peaks = locs(locs ~= 0);
 NUMBEROFSEGS = size(peaks,1) / 5;
 StaffSize = ((peaks(5,1) - peaks(1,1))+(peaks(10,1) - peaks(6,1))+(peaks(15,1) - peaks(11,1)))/24;
 %% Find location of notes
-NoteMap =["F3",0 ; "E3",1 ; "D3",2 ; "C3", 3; ];
+NoteMap =[["F3",0], ["F#",0]]
 %for  NOTE = 1:size(centroids,1)
 %    centroid(NOTES,1) - peaks(1,1);
 %    centroid(NOTES,1) - peaks(6,1);

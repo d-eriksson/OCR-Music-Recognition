@@ -36,43 +36,46 @@ plot(centroids(:,1), centroids(:,2), 'b*')
 hold off
 
 %% Find stafflines and their location
-BW123 = grayimg > graythresh(grayimg);
-BW123 = bwmorph(BW123, 'skeleton');
-numberOfOnesPerRow = sum(BW123, 2); % Change to 1 for columns
-[pks, locs] = findpeaks(numberOfOnesPerRow);
-map = pks > 350;
-locs = locs .* map;
-peaks = locs(locs ~= 0);
-NUMBEROFSEGS = size(peaks,1) / 5;
-StaffSize = ((peaks(5,1) - peaks(1,1)))/8;
-%% Find location of notes
-NoteMapFourth =["E4",-6;"D4",-5;"C4",-4;"B3",-3;"A3",-2;"G3", -1 ;"F3",0 ; "E3",1 ; "D3",2 ; "C3", 3; "B3", 4 ;
-          "A3", 5; "G2" , 6; "F2",7; "E2",8; "D2",9 ; "C2", 10; "B2", 11 ; "A2", 12; "G2", 13; "F2", 14; "E2", 15;
-          "D2", 16; "C2", 17; "B1",18; "A1",19; "G1", 20];
-NoteMapEight =["a5";"g4";"f4";"e4";"d4";"c4";"b3";"a3";"g3";"f3"; "e3"; "d3";
-                "c3"; "b3";"a3"; "g2"; "f2"; "e2"; "d2"; "c2"; "b2"; "a2"; "g2"; "f2"; "e2";"d2";
-                "c2"; "b1"; "a1"; "g1"];
-INDEXNOTEMAP = (-9:20)';
-%for  NOTE = 1:size(centroids,1)
-%    centroid(NOTES,1) - peaks(1,1);
-%    centroid(NOTES,1) - peaks(6,1);
-%    centroid(NOTES,1) - peaks(11,1);
-%end
 
-DistMap = zeros(size(centroids,1),NUMBEROFSEGS);
-DistMap(:,1) = centroids(:,2) - peaks(1,1) ;
-DistMap(:,2) = centroids(:,2) - peaks(6,1) ;
-DistMap(:,3) = centroids(:,2) - peaks(11,1);
-[~, ind] = min(abs(DistMap), [], 2);
-for k = 1:size(DistMap,1)
-    DistMap2(k,1) = DistMap(k,ind(k,1));
-end
-DistMap = DistMap2;
-DistMap(:,2) = ind;
-Notething = round(DistMap(:,1) ./StaffSize);
-Notething(:,2) = ind;
-Notething = sortrows(Notething,2);
-for i = 1:size(Notething(:,1))
-    X = find(INDEXNOTEMAP == Notething(i,1));
-    STRING(i) = NoteMapEight(X); 
-end
+STR = generate_string(grayimg, centroids);
+
+% BW123 = grayimg > graythresh(grayimg);
+% BW123 = bwmorph(BW123, 'skeleton');
+% numberOfOnesPerRow = sum(BW123, 2); % Change to 1 for columns
+% [pks, locs] = findpeaks(numberOfOnesPerRow);
+% map = pks > 350;
+% locs = locs .* map;
+% peaks = locs(locs ~= 0);
+% NUMBEROFSEGS = size(peaks,1) / 5;
+% StaffSize = ((peaks(5,1) - peaks(1,1)))/8;
+% %% Find location of notes
+% NoteMapFourth =["E4",-6;"D4",-5;"C4",-4;"B3",-3;"A3",-2;"G3", -1 ;"F3",0 ; "E3",1 ; "D3",2 ; "C3", 3; "B3", 4 ;
+%           "A3", 5; "G2" , 6; "F2",7; "E2",8; "D2",9 ; "C2", 10; "B2", 11 ; "A2", 12; "G2", 13; "F2", 14; "E2", 15;
+%           "D2", 16; "C2", 17; "B1",18; "A1",19; "G1", 20];
+% NoteMapEight =["a5";"g4";"f4";"e4";"d4";"c4";"b3";"a3";"g3";"f3"; "e3"; "d3";
+%                 "c3"; "b3";"a3"; "g2"; "f2"; "e2"; "d2"; "c2"; "b2"; "a2"; "g2"; "f2"; "e2";"d2";
+%                 "c2"; "b1"; "a1"; "g1"];
+% INDEXNOTEMAP = (-9:20)';
+% %for  NOTE = 1:size(centroids,1)
+% %    centroid(NOTES,1) - peaks(1,1);
+% %    centroid(NOTES,1) - peaks(6,1);
+% %    centroid(NOTES,1) - peaks(11,1);
+% %end
+% 
+% DistMap = zeros(size(centroids,1),NUMBEROFSEGS);
+% DistMap(:,1) = centroids(:,2) - peaks(1,1) ;
+% DistMap(:,2) = centroids(:,2) - peaks(6,1) ;
+% DistMap(:,3) = centroids(:,2) - peaks(11,1);
+% [~, ind] = min(abs(DistMap), [], 2);
+% for k = 1:size(DistMap,1)
+%     DistMap2(k,1) = DistMap(k,ind(k,1));
+% end
+% DistMap = DistMap2;
+% DistMap(:,2) = ind;
+% Notething = round(DistMap(:,1) ./StaffSize);
+% Notething(:,2) = ind;
+% Notething = sortrows(Notething,2);
+% for i = 1:size(Notething(:,1))
+%     X = find(INDEXNOTEMAP == Notething(i,1));
+%     STRING(i) = NoteMapEight(X); 
+% end

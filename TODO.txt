@@ -1,0 +1,3 @@
+- Dela upp kod i funktionen
+- Städa upp kod (Nya variabel namn, försök att ta bort loopar)
+- Testa nuvarande kod mot fler bilder, och rätta

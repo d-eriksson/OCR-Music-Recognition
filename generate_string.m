@@ -13,7 +13,11 @@ function [STR] = generate_string(grayimg, centroids)
     load Eights;
     INDEXNOTEMAP = (-9:20)';
  
-    DistMap = [centroids(:,2) - peaks(1,1), centroids(:,2) - peaks(6,1), centroids(:,2) - peaks(11,1)];
+    %DistMap = [centroids(:,2) - peaks(1,1), centroids(:,2) - peaks(6,1), centroids(:,2) - peaks(11,1)];
+    DistMap = zeros(length(centroids(:,2)), NumStaffSegs);
+    for i = 1:NumStaffSegs
+        DistMap(:,i) = centroids(:,2) - peaks(1+5*(i-1),1);
+    end
     
     [~, ind] = min(abs(DistMap), [], 2);
     for k = 1:size(DistMap,1)

@@ -41,5 +41,4 @@ end
 fine_angle = angle_list(max_peak_index);
 % Rotate the final image with hough + fine adjustment
 final_image = imrotate(grayimg, angle_hough+fine_angle, 'bicubic');
-imshow(final_image)
 end

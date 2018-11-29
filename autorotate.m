@@ -17,7 +17,7 @@ else
 end
 
 % For debugging
-%rotimg = imrotate(grayimg, angle_hough, 'bicubic');
+rotimg = imrotate(grayimg, angle_hough, 'bicubic');
 
 %% Make fine adjustments to the rotated image
 
@@ -27,7 +27,7 @@ index = 1;
 angle_list = -0.5:0.1:0.5;
 % Test different rotations and measure the peaks from each rotation
 for angle = -0.5:0.1:0.5
-    rotimg2 = imrotate(grayimg, angle);
+    rotimg2 = imrotate(rotimg, angle);
     HorizontalSum = sum(rotimg2 > graythresh(rotimg2), 2);
     [pks, ~] = findpeaks(HorizontalSum);
     

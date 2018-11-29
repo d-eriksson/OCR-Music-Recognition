@@ -1,19 +1,10 @@
-function [STR] = generate_string(grayimg, centroids)
-    %% Find stafflines and their location
-    BW = grayimg > graythresh(grayimg);
-    BW = bwmorph(BW, 'skeleton');
-    HorizontalSum = sum(BW, 2); % Change to 1 for columns
-    [pks, locs] = findpeaks(HorizontalSum);
-    map = pks > 350;
-    locs = locs .* map;
-    peaks = locs(locs ~= 0);
-    NumStaffSegs = size(peaks,1) / 5;
-    HalfNoteHeight = ((peaks(5,1) - peaks(1,1)))/8;
-    %% Find location of notes
+function [STR] = generate_string(centroids, HalfNoteHeight, NumStaffSegs, peaks)
+    % Eights contains the note names (strings)
     load Eights;
+    % INDEXNOTEMAP helps fetch values from Eights
     INDEXNOTEMAP = (-9:20)';
  
-    %DistMap = [centroids(:,2) - peaks(1,1), centroids(:,2) - peaks(6,1), centroids(:,2) - peaks(11,1)];
+    % Measure distance to the first line of each staff line segment
     DistMap = zeros(length(centroids(:,2)), NumStaffSegs);
     for i = 1:NumStaffSegs
         DistMap(:,i) = centroids(:,2) - peaks(1+5*(i-1),1);
@@ -25,11 +16,11 @@ function [STR] = generate_string(grayimg, centroids)
     end
     DistMap = TempDistMap;
     DistMap(:,2) = ind;
-    Notething = round(DistMap(:,1) ./HalfNoteHeight);
+    Notething = round(DistMap(:,1)./HalfNoteHeight);
     Notething(:,2) = ind;
     Notething = sortrows(Notething,2);
     for i = 1:size(Notething(:,1))
         X = find(INDEXNOTEMAP == Notething(i,1));
-        STR(i) = Eights(X); 
+        STR(i) = Eights(X);
     end
 end

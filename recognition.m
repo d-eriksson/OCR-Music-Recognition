@@ -12,10 +12,6 @@ grayimg = autorotate(grayimg);
 
 centroids = FindNotePositions(grayimg,HalfNoteHeight);
 
-imshow(grayimg)
-hold on
-plot(centroids(:,1), centroids(:,2), 'b*')
-hold off
 %% Find stafflines and their location
 
 STR = generate_string(centroids, HalfNoteHeight, NumStaffSegs, peaks);

@@ -2,7 +2,7 @@
 % Load image ( and invert it )
 close all
 clear
-grayimg = rgb2gray(im2double(imread('im13s.jpg'))).*(-1)+1;
+grayimg = rgb2gray(im2double(imread('im3s.jpg'))).*(-1)+1;
 
 %% Perform automatic rotation
 grayimg = autorotate(grayimg);

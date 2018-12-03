@@ -12,6 +12,8 @@ grayimg = autorotate(grayimg);
 
 centroids = FindNotePositions(grayimg,HalfNoteHeight);
 
+centroids = FindEights(grayimg, centroids, HalfNoteHeight);
+
 %% Find stafflines and their location
 
 STR = generate_string(centroids, HalfNoteHeight, NumStaffSegs, peaks);

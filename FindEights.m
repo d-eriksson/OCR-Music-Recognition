@@ -1,4 +1,4 @@
-function out = FindEights(grayimg, centroids, HalfNoteHeight)
+function centroids = FindEights(grayimg, centroids, HalfNoteHeight)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 level = graythresh(grayimg);
@@ -13,10 +13,13 @@ BW(:, 1:round(locs(1,1)+HalfNoteHeight*10)) = 0;
 
 STEMS_SE = strel('line', 20, 90);
 STEMS = imopen(BW, STEMS_SE);
-
-NOTEHEADS_SE = strel('disk', HalfNoteHeight*1.5);
+R = round(HalfNoteHeight*1.5);
+if mod(R,2) ~= 0
+    R = R + 1;
+end
+NOTEHEADS_SE = strel('disk', R);
 NOTEHEADS = imopen(BW,NOTEHEADS_SE);
-ENLARGE = strel('disk', HalfNoteHeight);
+ENLARGE = strel('disk', R);
 NOTEHEADS = imdilate(NOTEHEADS,ENLARGE);
 
 mn = [3,4];
@@ -32,7 +35,7 @@ FILTEREDIMG = ismember(labelmatrix(bwconncomp(BW3)), idx);
 STATS = regionprops(logical(FILTEREDIMG),'BoundingBox');
 
 figure
-imshow(BW3);
+imshow(grayimg);
 hold on
 for i = 1:size(STATS,1)
     rectangle('Position',[STATS(i).BoundingBox(1) - HalfNoteHeight,STATS(i).BoundingBox(2)- HalfNoteHeight,STATS(i).BoundingBox(3)+ 2*HalfNoteHeight,STATS(i).BoundingBox(4)+2*HalfNoteHeight], 'EdgeColor','r','LineWidth',2 )
@@ -41,7 +44,7 @@ for i = 1:size(STATS,1)
     RIGHT = LEFT + STATS(i).BoundingBox(3)+ 2*HalfNoteHeight;
     UP = STATS(i).BoundingBox(2)-HalfNoteHeight;
     DOWN = UP + STATS(i).BoundingBox(4)+ 2*HalfNoteHeight;
-    I = find(centroids(:,1) > LEFT & centroids(:,1) < RIGHT & centroids(:,2) > UP & centroids(:,2) < DOWN);
+    I = centroids(:,1) > LEFT & centroids(:,1) < RIGHT & centroids(:,2) > UP & centroids(:,2) < DOWN;
     centroids(I,3) = 1;
 
 end
@@ -49,6 +52,6 @@ end
 %rectangle('Position',[STATS(1).BoundingBox(1) - HalfNoteHeight,STATS(1).BoundingBox(2)- HalfNoteHeight,STATS(1).BoundingBox(3)+ 2*HalfNoteHeight,STATS(1).BoundingBox(4)+2*HalfNoteHeight], 'EdgeColor','b','LineWidth',2 )
 
 hold off
-out = null;
+
 end
 

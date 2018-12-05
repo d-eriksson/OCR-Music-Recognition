@@ -2,7 +2,7 @@
 % Load image ( and invert it )
 close all
 clear
-grayimg = rgb2gray(im2double(imread('im1s.jpg'))).*(-1)+1;
+grayimg = rgb2gray(im2double(imread('im13s.jpg'))).*(-1)+1;
 
 %% Perform automatic rotation
 grayimg = autorotate(grayimg);
@@ -12,13 +12,13 @@ grayimg = autorotate(grayimg);
 
 centroids = FindNotePositions(grayimg,HalfNoteHeight);
 
-centroids = NoteGroupIdentify(grayimg, centroids, HalfNoteHeight);
+[centroids, STEMS] = NoteGroupIdentify(grayimg, centroids, HalfNoteHeight);
 centroids = FindSingleNotes(centroids, STEMS, HalfNoteHeight, grayimg);
 
 
 imshow(grayimg)
 hold on
-    plot(centroids(centroids(:,3)==0,1),centroids(centroids(:,3)==0,2),'xm');
+    plot(centroids(centroids(:,3)==4,1),centroids(centroids(:,3)==4,2),'xm');
     plot(centroids(centroids(:,3)==8,1),centroids(centroids(:,3)==8,2),'+b');
     plot(centroids(centroids(:,3)==16,1),centroids(centroids(:,3)==16,2),'*r');
 hold off

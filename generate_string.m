@@ -1,4 +1,4 @@
-function [STR] = generate_string(centroids, HalfNoteHeight, NumStaffSegs, peaks)
+function [STR,Notething] = generate_string(centroids, HalfNoteHeight, NumStaffSegs, peaks)
     % Eights contains the note names (strings)
     load Eights;
     load Fourths;

@@ -13,13 +13,16 @@ grayimg = autorotate(grayimg);
 centroids = FindNotePositions(grayimg,HalfNoteHeight);
 
 centroids = NoteGroupIdentify(grayimg, centroids, HalfNoteHeight);
-figure;
+
 imshow(grayimg)
 hold on
-plot(centroids(centroids(:,3)==0,1),centroids(centroids(:,3)==0,2),'om');
-plot(centroids(centroids(:,3)==8,1),centroids(centroids(:,3)==8,2),'+b');
-plot(centroids(centroids(:,3)==16,1),centroids(centroids(:,3)==16,2),'*r');
+    plot(centroids(centroids(:,3)==0,1),centroids(centroids(:,3)==0,2),'xm');
+    plot(centroids(centroids(:,3)==8,1),centroids(centroids(:,3)==8,2),'+b');
+    plot(centroids(centroids(:,3)==16,1),centroids(centroids(:,3)==16,2),'*r');
 hold off
 %% Find stafflines and their location
 
-STR = generate_string(centroids, HalfNoteHeight, NumStaffSegs, peaks);
+[STR,Notething] = generate_string(centroids, HalfNoteHeight, NumStaffSegs, peaks);
+if(false)
+    PlayMusic(Notething);
+end

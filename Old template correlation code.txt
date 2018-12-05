@@ -1,0 +1,55 @@
+%     % Load templates
+%     fourth = im2double(rgb2gray(imread('Fourth.png')));
+%     eighth = im2double(rgb2gray(imread('Eighth.png')));
+%     sixteenth = im2double(rgb2gray(imread('Sixteenth.png')));
+%     template_scale = HalfNoteHeight/30;
+%     fourth = imresize(fourth, template_scale, 'bicubic');
+%     eighth = imresize(eighth, template_scale, 'bicubic');
+%     sixteenth = imresize(sixteenth, template_scale, 'bicubic');
+%     % Upside down templates
+%     fourthdown = imrotate(fourth, 180);
+%     eighthdown = imrotate(eighth, 180);
+%     sixteenthdown = imrotate(sixteenth, 180);
+%     
+%     % Determine subimage size
+%     width = 5*HalfNoteHeight;
+%     height = 8*HalfNoteHeight;
+%     margin = 2*HalfNoteHeight;
+%     
+%     fourth = fourth > graythresh(fourth);
+%     eighth = eighth > graythresh(eighth);
+%     sixteenth = sixteenth > graythresh(sixteenth);
+%     BW = grayimg > graythresh(grayimg);
+%     
+%     for i = 1:size(stem_centroids,1)
+%         % Determine position of subimage
+%         subimg_begin_y = round(centroids(i,2) - height);
+%         subimg_begin_x = round(centroids(i,1) - margin);
+%         subimg_end_y = round(centroids(i,2) + height);
+%         subimg_end_x = round(centroids(i,1) + width);
+%         % Create the subimage
+%         subimage = BW(subimg_begin_y:subimg_end_y, subimg_begin_x:subimg_end_x);
+% 
+%         % Perform cross correlation with a template in the subimage
+%         % Determine orientation of stem
+%         if(stem_centroids(i,2)-centroids(i,2) < 0)
+%             % Orientation is up
+%             C4 = normxcorr2(fourth, subimage);
+%             C8 = normxcorr2(eighth, subimage);
+%             C16 = normxcorr2(sixteenth, subimage);
+%             % Find peaks in each cross correlation matrix
+%             C4peak = max(max(C4));
+%             C8peak = max(max(C8));
+%             C16peak = max(max(C16));
+%         else
+%             % Orientation is down
+%             C4 = normxcorr2(fourthdown, subimage);
+%             C8 = normxcorr2(eighthdown, subimage);
+%             C16 = normxcorr2(sixteenthdown, subimage);
+%             % Find peaks in each correlation matrix
+%             C4peak = max(max(C4));
+%             C8peak = max(max(C8));
+%             C16peak = max(max(C16));
+%         end
+% 
+%     end

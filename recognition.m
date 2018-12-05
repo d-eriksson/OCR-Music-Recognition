@@ -2,7 +2,7 @@
 % Load image ( and invert it )
 close all
 clear
-grayimg = rgb2gray(im2double(imread('im3s.jpg'))).*(-1)+1;
+grayimg = rgb2gray(im2double(imread('im1s.jpg'))).*(-1)+1;
 
 %% Perform automatic rotation
 grayimg = autorotate(grayimg);
@@ -12,7 +12,9 @@ grayimg = autorotate(grayimg);
 
 centroids = FindNotePositions(grayimg,HalfNoteHeight);
 
-centroids = FindEights(grayimg, centroids, HalfNoteHeight);
+[centroids, STEMS] = FindEights(grayimg, centroids, HalfNoteHeight);
+
+centroids = FindSingleNotes(centroids, STEMS, HalfNoteHeight, grayimg);
 
 %% Find stafflines and their location
 

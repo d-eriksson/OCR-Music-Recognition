@@ -1,4 +1,4 @@
-function centroids = FindEights(grayimg, centroids, HalfNoteHeight)
+function [centroids, STEMS] = FindEights(grayimg, centroids, HalfNoteHeight)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 level = graythresh(grayimg);

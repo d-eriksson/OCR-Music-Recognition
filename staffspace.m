@@ -13,7 +13,7 @@ function [HalfNoteHeight, NumStaffSegs, peaks] = staffspace(grayimg)
     [pks, ~, w] = findpeaks(HorizontalSumSmooth);
     
     % Remove narrow peaks
-    map_width = w >= 0.5*max(w);
+    map_width = w >= 0.05*size(BW,1);
     pks_width_filtered = pks .* map_width;
     pks_width_filtered = pks_width_filtered(pks_width_filtered ~= 0);
     

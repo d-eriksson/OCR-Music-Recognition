@@ -1,3 +1,10 @@
-- Dela upp kod i funktionen
-- Städa upp kod (Nya variabel namn, försök att ta bort loopar)
-- Testa nuvarande kod mot fler bilder, och rätta
+- Mer robust sätt att hitta första staff linen i ett segment (den man jämför mot)
+- Förbättra grupp-projektiongrejen så att den inte misstolkar som 16-del
+- Undersök Bred dina vingar / im9s
+- Anledningen att hough inte funkar är dessa lines:
+% if(median_theta > 0)
+%     angle_hough = median_theta-90;
+% else
+%     angle_hough = 90+median_theta;
+% end
+- STEMS innehåller inte alla stems, lite för aggresiv filtrering (orsakar problem i tex im1s.jpg)

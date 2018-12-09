@@ -24,9 +24,10 @@ function final_image = autorotate(grayimg)
 index = 1;
 % Angle list is used to fetch the angle once
 % we know which index of the loop performed the best
-angle_list = -5:0.1:5;
+angle_list = -5:0.05:5;
+max_peaks = zeros(length(angle_list),1);
 % Test different rotations and measure the peaks from each rotation
-for angle = -5:0.1:5
+for angle = -5:0.05:5
     rotimg2 = imrotate(grayimg, angle);
     HorizontalSum = sum(rotimg2 > graythresh(rotimg2), 2);
     [pks, ~] = findpeaks(HorizontalSum);

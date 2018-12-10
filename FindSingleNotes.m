@@ -10,7 +10,6 @@ function centroids2 = FindSingleNotes(centroids, STEMS, HalfNoteHeight, grayimg)
     thick_lines = imopen(STEMS, SE_select_thick_lines);
     STEMS = logical(STEMS - thick_lines);
     
-    
     % Determine sub image size
     width = 1.5*HalfNoteHeight;
     height = 7*HalfNoteHeight;
@@ -23,6 +22,7 @@ function centroids2 = FindSingleNotes(centroids, STEMS, HalfNoteHeight, grayimg)
         subimg_end_x = round(centroids(i,1)+width);
         % Create a subimage around the note head
         subimagemat = STEMS(subimg_begin_y:subimg_end_y, subimg_begin_x:subimg_end_x);
+        
         % Find all note stems  in the subimage
         STATS = regionprops(logical(bwlabel(subimagemat)), 'centroid');
         
@@ -35,7 +35,9 @@ function centroids2 = FindSingleNotes(centroids, STEMS, HalfNoteHeight, grayimg)
         elseif(size(STATS, 1)>1)
             % Measure the x-distance to the discovered stems
             for j = 1:size(STATS, 1)
-                distance(j) = norm(STATS(j).Centroid-centroids(i));
+                dist1 = norm(STATS(j).Centroid - (centroids(i) + 2*HalfNoteHeight));
+                dist2 = norm(STATS(j).Centroid - (centroids(i) - 2*HalfNoteHeight));
+                distance(j) = min([dist1 dist2]);
             end
             % Find index of the minimum distance from STATS
             [~, mindistindex] = min(distance);
@@ -44,6 +46,7 @@ function centroids2 = FindSingleNotes(centroids, STEMS, HalfNoteHeight, grayimg)
         % If no stem is found
         elseif(size(STATS, 1) == 0)
             % Shouldn't happen, but typically means a whole note was found
+            % because there is no stem
         end
     end
     
@@ -89,7 +92,6 @@ function centroids2 = FindSingleNotes(centroids, STEMS, HalfNoteHeight, grayimg)
         
         % Vertical Projection
         VerticalSum = sum(subimage, 1);
-        HorizontalSum = sum(subimage, 2);
         
         % Find how many peaks
         [pksvert, ~] = findpeaks(VerticalSum, 'MinPeakHeight', 0.5*size(subimage,1));

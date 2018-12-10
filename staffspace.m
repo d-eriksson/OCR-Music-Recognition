@@ -13,8 +13,8 @@ function [HalfNoteHeight, NumStaffSegs, peaks] = staffspace(grayimg)
     [pks, ~, w] = findpeaks(HorizontalSumSmooth);
     
     % Remove narrow peaks
-    map_width = w >= 0.05*size(BW,1);
-    pks_width_filtered = pks .* map_width;
+    map_width_height_filter = w >= 0.05*size(BW,1) & pks>0.2*max(pks);
+    pks_width_filtered = pks .* map_width_height_filter;
     pks_width_filtered = pks_width_filtered(pks_width_filtered ~= 0);
     
     % Calculate number of staff lines

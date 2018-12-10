@@ -88,9 +88,7 @@ for i = 1:size(STATS,1)
 end
 
 %rectangle('Position',[STATS(1).BoundingBox(1) - HalfNoteHeight,STATS(1).BoundingBox(2)- HalfNoteHeight,STATS(1).BoundingBox(3)+ 2*HalfNoteHeight,STATS(1).BoundingBox(4)+2*HalfNoteHeight], 'EdgeColor','b','LineWidth',2 )
-
 hold off
-figure
 
 end
 

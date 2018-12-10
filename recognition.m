@@ -2,7 +2,7 @@
 % Load image ( and invert it )
 close all
 clear
-grayimg = rgb2gray(im2double(imread('im10s.jpg'))).*(-1)+1;
+grayimg = rgb2gray(im2double(imread('im9s.jpg'))).*(-1)+1;
 
 % Perform automatic rotation
 grayimg = autorotate(grayimg);
@@ -23,6 +23,7 @@ centroids = FindSingleNotes(centroids, STEMS, HalfNoteHeight, grayimg);
 % Plot the identified notes over the original (rotated) image
 imshow(grayimg)
 hold on
+plot(centroids(centroids(:,3)==0,1),centroids(centroids(:,3)==0,2),'oc');
     plot(centroids(centroids(:,3)==4,1),centroids(centroids(:,3)==4,2),'xm');
     plot(centroids(centroids(:,3)==8,1),centroids(centroids(:,3)==8,2),'+b');
     plot(centroids(centroids(:,3)==16,1),centroids(centroids(:,3)==16,2),'*r');
@@ -32,5 +33,5 @@ hold off
 [STR,Notething] = generate_string(centroids, HalfNoteHeight, NumStaffSegs, peaks);
 
 if(false)
-    PlayMusic(Notething);
+    PlayMusic(Notething,40);
 end

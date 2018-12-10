@@ -2,11 +2,14 @@ function final_image = autorotate(grayimg)
 % Conversion to binary using Osus' method
 level = graythresh(grayimg);
 BW1 = grayimg > level;
-
+mn = [3,4];
+FLAGS_SE = strel('rectangle', mn);
+FLAGS = imopen(BW1, FLAGS_SE);
+BW1 = BW1 -FLAGS;
 % Hough transform, hough peaks, hough lines
 [H, T, R] = hough(BW1, 'theta', -90:0.5:89);
 P = houghpeaks(H, 4);
-L = houghlines(BW1, T, R, P, 'FillGap', 15);
+L = houghlines(BW1, T, R, P, 'FillGap', 5);
 
 % Rotate by the median line angle
 median_theta = median([L.theta]);

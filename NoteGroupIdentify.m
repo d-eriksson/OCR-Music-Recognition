@@ -33,10 +33,10 @@ idx = find([st.Area] > HalfNoteHeight*HalfNoteHeight*10);
 FILTEREDIMG = ismember(labelmatrix(bwconncomp(BW3)), idx);
 STATS = regionprops(logical(FILTEREDIMG),'BoundingBox');
 
-BW3 = FLAGS-NOTEHEADS;
+
 BW3 = BW3 == 1;
 centroids(:,3) = zeros(length(centroids),1);
-%imshow(BW);
+%imshow(BW3);
 %hold on
 for i = 1:size(STATS,1)
     %rectangle('Position',[STATS(i).BoundingBox(1) - HalfNoteHeight,STATS(i).BoundingBox(2)- HalfNoteHeight,STATS(i).BoundingBox(3)+ 2*HalfNoteHeight,STATS(i).BoundingBox(4)+2*HalfNoteHeight], 'EdgeColor','r','LineWidth',2 )

@@ -10,27 +10,12 @@ function [HalfNoteHeight, NumStaffSegs, peaks] = staffspace(grayimg)
     % Horizontal Projection
     HorizontalSum = sum(BW, 2);
     HorizontalSumSmooth = smoothdata(HorizontalSum,'movmean', length(HorizontalSum)/10);
-    [pks, locs_smooth, w] = findpeaks(HorizontalSumSmooth);
+    [pks, ~, w] = findpeaks(HorizontalSumSmooth);
     
     % Remove narrow peaks
     map_width_height_filter = w >= 0.05*size(BW,1) & pks>0.2*max(pks);
     pks_width_filtered = pks .* map_width_height_filter;
     pks_width_filtered = pks_width_filtered(pks_width_filtered ~= 0);
-%    locs_smooth_filtered = locs_smooth .* map_width_height_filter;
-%    locs_smooth_filtered = locs_smooth_filtered(locs_smooth_filtered ~= 0);
-    
-%     plot(HorizontalSumSmooth)
-%     hold on
-%     for i = 1:length(pks_width_filtered)
-%         plot(locs_smooth_filtered(i), pks_width_filtered(i), 'ob')
-%     end
-    
-%     % Calculate median smoothed peak distance (could be useful)
-%     peak_distances = zeros(length(locs_smooth_filtered)-1, 1);
-%     for i = 1:length(peak_distances)
-%         peak_distances(i,1) = locs_smooth_filtered(i+1)-locs_smooth_filtered(i);
-%     end
-%     approx_staff_seg_distance = median(peak_distances);
     
     % Calculate number of staff lines
     NumStaffSegs = length(pks_width_filtered);

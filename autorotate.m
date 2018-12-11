@@ -37,7 +37,6 @@ for angle = -2:0.05:2
     else
         max_peaks(index) = 0;
     end
-    
     index = index+1;
 end
 % Find the index of the loop with the highest peak

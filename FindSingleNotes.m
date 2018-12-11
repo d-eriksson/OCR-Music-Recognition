@@ -102,7 +102,8 @@ function centroids2 = FindSingleNotes(centroids, STEMS, HalfNoteHeight, grayimg)
         elseif(size(pksvert, 2) == 2)
             centroids(i, 3) = 8;
         end
-    end
+        plot(VerticalSum)
+        end
 
     centroids2(centroids2(:,3) == 0, :) = centroids;
     

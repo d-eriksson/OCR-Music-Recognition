@@ -10,6 +10,7 @@ map = pks > 0.03*size(BW,1);
 locs = locs .* map;
 locs = locs(locs ~= 0);
 BW(:, 1:round(locs(1,1)+HalfNoteHeight*10)) = 0;
+
 BW = bwmorph(BW, 'open'); % Morph image with open filter
 
 STATS = regionprops(logical(BW),'Area','Eccentricity');
